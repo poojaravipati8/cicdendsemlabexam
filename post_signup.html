@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Signup Test</title>
+</head>
+<body>
+  <h3>Signup test</h3>
+  <button id="btn">Send signup</button>
+  <pre id="out"></pre>
+
+  <script>
+    document.getElementById('btn').onclick = async () => {
+      const body = { username: 'testuser', email: 'test@example.com', password: 'pass' };
+      try {
+        const res = await fetch('http://localhost:8082/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+          mode: 'cors'
+        });
+        const text = await res.text();
+        document.getElementById('out').textContent = `Status: ${res.status} ${res.statusText}\n\n${text}`;
+      } catch (e) {
+        document.getElementById('out').textContent = 'Error: ' + e;
+      }
+    };
+  </script>
+</body>
+</html>
